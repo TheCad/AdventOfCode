@@ -21,9 +21,26 @@ try {
 }
 
 $command = $args->getCommand();
-$runAll = $args->getOpt('all');
+$runAll = (bool)$args->getOpt('all');
+$year = (int)($runAll ? 0 : $args->getArg('year', 2022));
+$day = (int)$args->getArg('day');
 
-$year = $runAll ? '' : $args->getArg('year', 2022);
-$day = $args->getArg('day');
+switch ($command) {
+    case 'run':
+        run($day, $year, $runAll);
+        break;
+    case 'create':
+        create($day, $year);
+        break;
+    default:
+        dump("KAPOT");
+        break;
+}
 
-dump(sprintf("Command: %s, Year: %s, Day: %s, runall: %b", $command, $year, $day, $runAll));
+function run(int $day, int $year, bool $runAll) : void {
+    dump($day, $year, $runAll);
+}
+
+function create(int $day, int $year) : void {
+    dump($day, $year);
+}
