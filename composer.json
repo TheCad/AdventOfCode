@@ -15,5 +15,8 @@
     "require-dev": {
         "symfony/var-dumper": "^6.1",
         "vanilla/garden-cli": "^3.1"
+    },
+    "require": {
+        "symfony/dotenv": "^6.1"
     }
 }

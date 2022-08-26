@@ -1,5 +1,6 @@
 <?php
 use Garden\Cli\Cli;
+use Symfony\Component\Dotenv\Dotenv;
 
 require 'vendor/autoload.php';
 
@@ -33,7 +34,7 @@ switch ($command) {
         create($day, $year);
         break;
     default:
-        dump("KAPOT");
+        dd("KAPOT");
         break;
 }
 
@@ -50,6 +51,28 @@ function create(int $day, int $year): void {
     createDirectory($path);
     createFile($filepath);
     writeTemplate($filepath, $year, $day);
+
+    $testPath = "";
+    $testFilePath = "";
+
+    createTestDirectory($testPath); // Todo implement this
+    createTestFile($testFilePath); // Todo implement this
+    writeTestTemplate($testFilePath, $year, $day); // Todo implement thi
+    //s
+
+    getInput($year, $day);
+}
+
+function createTestDirectory(string $testPath) {
+    // Todo implement this
+}
+
+function writeTestTemplate(string $testFilePath, int $year, int $day) {
+    // Todo implement this
+}
+
+function createTestFile(string $testFilePath) {
+    // Todo implement this
 }
 
 function createDirectory(string $path): void {
@@ -74,4 +97,20 @@ function writeTemplate(string $filepath, int $year, int $day): void {
     if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($template), $year, $day))) {
         throw new \RuntimeException(sprintf('File "%s" was not created', $filepath));
     }
+}
+
+function getInput(int $year, int $day) {
+    (new Dotenv())->usePutenv(true)->bootEnv(__DIR__.'/.env');
+
+    $url = sprintf("https://adventofcode.com/%d/day/%d/input", $year, $day);
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $headers = array(
+        sprintf("Cookie: session=%s", getenv('SESSION')),
+    );
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    $response = curl_exec($curl);
+    curl_close($curl);
+    dd($response);
 }
