@@ -1,5 +1,6 @@
 <?php
 use Garden\Cli\Cli;
+use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\Dotenv\Dotenv;
 
 require 'vendor/autoload.php';
@@ -8,12 +9,12 @@ $cli = Cli::Create()
     ->command('run')
     ->description('Runs the script of the given year and day ')
     ->opt('all:a', 'Runs all', false, 'boolean')
-    ->arg('day', 'What day', false)
-    ->arg('year', 'What Year', false)
+    ->arg('day', 'What day')
+    ->arg('year', 'What Year')
     ->command('create')
     ->description('Creates the boilerplate for the given year and day')
     ->arg('day', 'What day', true)
-    ->arg('year', 'What Year', false);
+    ->arg('year', 'What Year');
 
 try {
     $args = $cli->parse($argv);
@@ -34,8 +35,7 @@ switch ($command) {
         create($day, $year);
         break;
     default:
-        dd("KAPOT");
-        break;
+        dd("BROKEN");
 }
 
 function run(int $day, int $year, bool $runAll): void {
@@ -62,28 +62,31 @@ function create(int $day, int $year): void {
     getInput($year, $day);
 }
 
-function createTestDirectory(string $testPath) {
+function createTestDirectory(string $testPath): void {
+    dump("Implement");
     // Todo implement this
 }
 
-function writeTestTemplate(string $testFilePath, int $year, int $day) {
+function writeTestTemplate(string $testFilePath, int $year, int $day): void {
+    dump("Implement");
     // Todo implement this
 }
 
-function createTestFile(string $testFilePath) {
+function createTestFile(string $testFilePath): void {
+    dump("Implement");
     // Todo implement this
 }
 
 function createDirectory(string $path): void {
     if (!file_exists($path) && !mkdir($path, 0755, true) && !is_dir($path)) {
-        throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
+        throw new RuntimeException(sprintf('Directory "%s" was not created', $path));
     }
 }
 
 function createFile(string $filepath): void {
     if (!file_exists($filepath)) {
         if (!fopen($filepath, 'wb')) {
-            throw new \RuntimeException(sprintf('File "%s" was not created', $filepath));
+            throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
         }
     } else {
         dump("File already exists. Skipping...");
@@ -94,12 +97,13 @@ function writeTemplate(string $filepath, int $year, int $day): void {
     $template = __DIR__."/templates/day_template.txt";
     $file = fopen($filepath, 'wb');
     if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($template), $year, $day))) {
-        throw new \RuntimeException(sprintf('File "%s" was not created', $filepath));
+        throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
     }
 }
 
-function getInput(int $year, int $day) {
-    (new Dotenv())->usePutenv(true)->bootEnv(__DIR__.'/.env');
+function getInput(int $year, int $day): void
+{
+    (new Dotenv())->usePutenv()->bootEnv(__DIR__.'/.env');
 
     $url = sprintf("https://adventofcode.com/%d/day/%d/input", $year, $day);
     $curl = curl_init($url);
@@ -111,5 +115,5 @@ function getInput(int $year, int $day) {
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     $response = curl_exec($curl);
     curl_close($curl);
-    dd($response);
+    dump($response);
 }
