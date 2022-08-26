@@ -57,8 +57,7 @@ function create(int $day, int $year): void {
 
     createTestDirectory($testPath); // Todo implement this
     createTestFile($testFilePath); // Todo implement this
-    writeTestTemplate($testFilePath, $year, $day); // Todo implement thi
-    //s
+    writeTestTemplate($testFilePath, $year, $day); // Todo implement this
 
     getInput($year, $day);
 }
