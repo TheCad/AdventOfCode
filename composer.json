@@ -1,0 +1,19 @@
+{
+    "name": "thecad/advent-of-code",
+    "description": "Advent of Code Repository",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Thecad\\AdventOfCode\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "TheCad"
+        }
+    ],
+    "require-dev": {
+        "symfony/var-dumper": "^6.1",
+        "vanilla/garden-cli": "^3.1"
+    }
+}
