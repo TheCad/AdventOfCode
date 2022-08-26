@@ -37,10 +37,45 @@ switch ($command) {
         break;
 }
 
-function run(int $day, int $year, bool $runAll) : void {
+function run(int $day, int $year, bool $runAll): void {
     dump($day, $year, $runAll);
 }
 
-function create(int $day, int $year) : void {
+function create(int $day, int $year): void {
+    dump(sprintf("Creating solution file for year %d and day %d", $year, $day));
+
+    $path = sprintf("%s/src/Year%d", __DIR__ , $year);
+    $filepath = sprintf("%s/Day%02d.php", $path , $day);
+
+    createDirectory($path);
+    createFile($filepath);
+    writeTemplate($filepath, $year, $day);
+
+    dump($path, $filepath);
+
     dump($day, $year);
+}
+
+function createDirectory(string $path): void {
+    if (!file_exists($path) && !mkdir($path, 0755, true) && !is_dir($path)) {
+        throw new \RuntimeException(sprintf('Directory "%s" was not created', $path));
+    }
+}
+
+function createFile(string $filepath): void {
+    if (!file_exists($filepath)) {
+        if (!fopen($filepath, 'wb')) {
+            throw new \RuntimeException(sprintf('File "%s" was not created', $filepath));
+        }
+    } else {
+        dump("File already exists. Skipping...");
+    }
+}
+
+function writeTemplate(string $filepath, int $year, int $day): void {
+    $template = __DIR__."/templates/day_template.txt";
+    $file = fopen($filepath, 'wb');
+    if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($template), $year, $day))) {
+        throw new \RuntimeException(sprintf('File "%s" was not created', $filepath));
+    }
 }
