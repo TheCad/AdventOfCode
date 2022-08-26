@@ -50,10 +50,6 @@ function create(int $day, int $year): void {
     createDirectory($path);
     createFile($filepath);
     writeTemplate($filepath, $year, $day);
-
-    dump($path, $filepath);
-
-    dump($day, $year);
 }
 
 function createDirectory(string $path): void {
