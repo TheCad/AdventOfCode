@@ -6,13 +6,13 @@ require 'vendor/autoload.php';
 $cli = Cli::Create()
     ->command('run')
     ->description('Runs the script of the given year and day ')
-    ->opt('year:y', 'What year', false, 'integer')
-    ->opt('day:d', 'What day', false, 'integer')
     ->opt('all:a', 'Runs all', false, 'boolean')
+    ->arg('day', 'What day', false)
+    ->arg('year', 'What Year', false)
     ->command('create')
     ->description('Creates the boilerplate for the given year and day')
-    ->opt('year:y', 'What year', true, 'integer')
-    ->opt('day:d', 'What day', true, 'integer');
+    ->arg('day', 'What day', true)
+    ->arg('year', 'What Year', false);
 
 try {
     $args = $cli->parse($argv);
@@ -20,10 +20,10 @@ try {
     dd($e->getMessage());
 }
 
+$command = $args->getCommand();
+$runAll = $args->getOpt('all');
 
+$year = $runAll ? '' : $args->getArg('year', 2022);
+$day = $args->getArg('day');
 
-dump("Command: " . $args->getCommand(), "Year: " . $args->getOpt('year'), "Day: " . $args->getOpt('day'),  $args->getOpt('all') ? "All?: True" :  "All?: False");
-
-
-//$test = new Thecad\AdventOfCode\Test();
-//$test->bla();
+dump(sprintf("Command: %s, Year: %s, Day: %s, runall: %b", $command, $year, $day, $runAll));
