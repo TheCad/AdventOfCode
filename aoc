@@ -78,9 +78,9 @@ function create(int $day, int $year): void {
     $testFilePath = sprintf("%s/Day%02dTest.php", $testPath, $day);
     $testTemplatePath = sprintf("%s/templates/test_template.txt", __DIR__);
 
-    createDirectory($testPath); // Todo implement this
-    createFile($testFilePath); // Todo implement this
-    writeTemplate('test', $testFilePath, $year, $day, $testTemplatePath); // Todo implement this
+    createDirectory($testPath);
+    createFile($testFilePath);
+    writeTemplate('test', $testFilePath, $year, $day, $testTemplatePath);
 }
 
 function createDirectory(string $path): void {
