@@ -67,7 +67,7 @@ function create(int $day, int $year): void {
 
     createDirectory($solutionPath);
     createFile($solutionFilepath);
-    writeTemplate($solutionFilepath, $year, $day, $solutionTemplatePath);
+    writeTemplate('solution', $solutionFilepath, $year, $day, $solutionTemplatePath);
 
     dump(sprintf("Creating input file for year %d and day %d", $year, $day));
     getInput($year, $day);
@@ -80,7 +80,7 @@ function create(int $day, int $year): void {
 
     createDirectory($testPath); // Todo implement this
     createFile($testFilePath); // Todo implement this
-    writeTemplate($testFilePath, $year, $day, $testTemplatePath); // Todo implement this
+    writeTemplate('test', $testFilePath, $year, $day, $testTemplatePath); // Todo implement this
 }
 
 function createDirectory(string $path): void {
@@ -99,10 +99,21 @@ function createFile(string $filepath): void {
     }
 }
 
-function writeTemplate(string $filepath, int $year, int $day, string $templatePath): void {
+function writeTemplate(string $type, string $filepath, int $year, int $day, string $templatePath): void {
     $file = fopen($filepath, 'wb');
-    if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($templatePath), $year, $day, $year, $day))) {
-        throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
+    switch ($type) {
+        case 'solution':
+            if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($templatePath), $year, $day, $year, $day))) {
+                throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
+            }
+            break;
+        case 'test':
+            if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($templatePath), $year, $year, $day, $day, $day))) {
+                throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
+            }
+            break;
+        default:
+            break;
     }
 }
 
