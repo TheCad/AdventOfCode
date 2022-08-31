@@ -1,10 +1,10 @@
 <?php
 
-namespace Thecad\AdventOfCode\Year2022;
+namespace Thecad\AdventOfCode\Year%d;
 
 use Thecad\AdventOfCode\Base\BaseClass;
 
-class Day01 extends BaseClass {
+class Day%02d extends BaseClass {
     public function __construct() {
         parent::__construct();
     }

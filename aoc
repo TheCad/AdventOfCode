@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 use Garden\Cli\Cli;
 use Symfony\Component\Dotenv\Dotenv;
@@ -7,9 +8,9 @@ require 'vendor/autoload.php';
 $cli = Cli::Create()
     ->command('run')
     ->description('Runs the script of the given year and day ')
-    ->opt('all:a', 'Runs all', false, 'boolean')
     ->arg('day', 'What day')
     ->arg('year', 'What Year')
+    ->arg('part', 'Which part')
     ->command('create')
     ->description('Creates the boilerplate for the given year and day')
     ->arg('day', 'What day', true)
@@ -22,13 +23,13 @@ try {
 }
 
 $command = $args->getCommand();
-$runAll = (bool)$args->getOpt('all');
-$year = (int)($runAll ? 0 : $args->getArg('year', 2022));
+$year = (int)$args->getArg('year', 2022);
 $day = (int)$args->getArg('day');
+$part = (int)$args->getArg('part');
 
 switch ($command) {
     case 'run':
-        run($day, $year, $runAll);
+        run($day, $year, $part);
         break;
     case 'create':
         create($day, $year);
@@ -37,8 +38,24 @@ switch ($command) {
         dd("BROKEN");
 }
 
-function run(int $day, int $year, bool $runAll): void {
-    dump($day, $year, $runAll);
+function run(int $day, int $year, int $part): void {
+    $file = sprintf("Thecad\AdventOfCode\Year%d\Day%02d", $year, $day);
+    if (!class_exists($file)) {
+        dump("This day has not yet been created");
+        return;
+    }
+    $class = new $file();
+    switch ($part) {
+        case 1:
+            $class->partOne();
+            break;
+        case 2:
+            $class->partTwo();
+            break;
+        default:
+            $class->partOne();
+            $class->partTwo();
+    }
 }
 
 function create(int $day, int $year): void {
@@ -95,7 +112,7 @@ function createFile(string $filepath): void {
 function writeTemplate(string $filepath, int $year, int $day): void {
     $template = __DIR__."/templates/day_template.txt";
     $file = fopen($filepath, 'wb');
-    if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($template), $year, $day))) {
+    if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($template), $year, $day, $year, $day))) {
         throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
     }
 }

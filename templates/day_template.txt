@@ -6,14 +6,17 @@ use Thecad\AdventOfCode\Base\BaseClass;
 
 class Day%02d extends BaseClass {
     public function __construct() {
+        $this->relativePath = __DIR__;
         parent::__construct();
     }
 
-    public function partOne() {
+    public function partOne(): void {
+        dump('Running part 1');
         // Create solution
     }
 
-    public function partTwo() {
+    public function partTwo(): void {
+        dump('Running part 2');
         // Create solution
     }
 }
