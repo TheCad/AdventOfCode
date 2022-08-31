@@ -1,6 +1,5 @@
 <?php
 use Garden\Cli\Cli;
-use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\Dotenv\Dotenv;
 
 require 'vendor/autoload.php';
@@ -52,28 +51,28 @@ function create(int $day, int $year): void {
     createFile($filepath);
     writeTemplate($filepath, $year, $day);
 
+    dump(sprintf("Creating input file for year %d and day %d", $year, $day));
+    getInput($year, $day);
+
+    dump(sprintf("Creating test file for year %d and day %d", $year, $day));
+
     $testPath = "";
     $testFilePath = "";
 
     createTestDirectory($testPath); // Todo implement this
     createTestFile($testFilePath); // Todo implement this
     writeTestTemplate($testFilePath, $year, $day); // Todo implement this
-
-    getInput($year, $day);
 }
 
 function createTestDirectory(string $testPath): void {
-    dump("Implement");
     // Todo implement this
 }
 
 function writeTestTemplate(string $testFilePath, int $year, int $day): void {
-    dump("Implement");
     // Todo implement this
 }
 
 function createTestFile(string $testFilePath): void {
-    dump("Implement");
     // Todo implement this
 }
 
@@ -89,7 +88,7 @@ function createFile(string $filepath): void {
             throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
         }
     } else {
-        dump("File already exists. Skipping...");
+        dump("Solution file already exists. Skipping...");
     }
 }
 
@@ -103,6 +102,17 @@ function writeTemplate(string $filepath, int $year, int $day): void {
 
 function getInput(int $year, int $day): void
 {
+    $path = sprintf("%s/src/Year%d/inputs", __DIR__ , $year);
+    $filepath = sprintf("%s/Day%02d_input.txt", $path, $day);
+    if (!file_exists($path) && !mkdir($path, 0755, true) && !is_dir($path)) {
+        throw new RuntimeException(sprintf('Directory "%s" was not created', $path));
+    }
+
+    if (file_exists($filepath)) {
+        dump("Input file already exists. Skipping...");
+        return;
+    }
+
     (new Dotenv())->usePutenv()->bootEnv(__DIR__.'/.env');
 
     $url = sprintf("https://adventofcode.com/%d/day/%d/input", $year, $day);
@@ -115,5 +125,9 @@ function getInput(int $year, int $day): void
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     $response = curl_exec($curl);
     curl_close($curl);
-    dump($response);
+
+    $file = fopen($filepath, 'wb');
+    if (!fwrite($file, $response)) {
+        throw new RuntimeException(sprintf('File "%s" was not created', $filepath . "input.txt"));
+    }
 }
