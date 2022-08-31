@@ -1,19 +1,15 @@
 <?php
 
-namespace Thecad\AdventOfCode\Year%d;
+namespace Thecad\AdventOfCode\Tests\Year%d;
 
-use Thecad\AdventOfCode\Base\BaseClass;
+use PHPUnit\Framework\TestCase;
 
-class Day%02d extends BaseClass {
-    public function __construct() {
-        parent::__construct();
+class Day%02dTest extends TestCase {
+    public function testPart1(): void {
+        self::assertTrue(true);
     }
 
-    public function partOne() {
-        // Create solution
-    }
-
-    public function partTwo() {
-        // Create solution
+    public function testPart2(): void {
+        self::assertTrue(true);
     }
 }

@@ -61,36 +61,26 @@ function run(int $day, int $year, int $part): void {
 function create(int $day, int $year): void {
     dump(sprintf("Creating solution file for year %d and day %d", $year, $day));
 
-    $path = sprintf("%s/src/Year%d", __DIR__ , $year);
-    $filepath = sprintf("%s/Day%02d.php", $path , $day);
+    $solutionPath = sprintf("%s/src/Year%d", __DIR__ , $year);
+    $solutionFilepath = sprintf("%s/Day%02d.php", $solutionPath , $day);
+    $solutionTemplatePath = sprintf("%s/templates/day_template.txt", __DIR__);
 
-    createDirectory($path);
-    createFile($filepath);
-    writeTemplate($filepath, $year, $day);
+    createDirectory($solutionPath);
+    createFile($solutionFilepath);
+    writeTemplate($solutionFilepath, $year, $day, $solutionTemplatePath);
 
     dump(sprintf("Creating input file for year %d and day %d", $year, $day));
     getInput($year, $day);
 
     dump(sprintf("Creating test file for year %d and day %d", $year, $day));
 
-    $testPath = "";
-    $testFilePath = "";
+    $testPath = sprintf("%s/tests/Year%d", __DIR__, $year);
+    $testFilePath = sprintf("%s/Day%02dTest.php", $testPath, $day);
+    $testTemplatePath = sprintf("%s/templates/test_template.txt", __DIR__);
 
-    createTestDirectory($testPath); // Todo implement this
-    createTestFile($testFilePath); // Todo implement this
-    writeTestTemplate($testFilePath, $year, $day); // Todo implement this
-}
-
-function createTestDirectory(string $testPath): void {
-    // Todo implement this
-}
-
-function writeTestTemplate(string $testFilePath, int $year, int $day): void {
-    // Todo implement this
-}
-
-function createTestFile(string $testFilePath): void {
-    // Todo implement this
+    createDirectory($testPath); // Todo implement this
+    createFile($testFilePath); // Todo implement this
+    writeTemplate($testFilePath, $year, $day, $testTemplatePath); // Todo implement this
 }
 
 function createDirectory(string $path): void {
@@ -105,14 +95,13 @@ function createFile(string $filepath): void {
             throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
         }
     } else {
-        dump("Solution file already exists. Skipping...");
+        dump("File already exists. Skipping...");
     }
 }
 
-function writeTemplate(string $filepath, int $year, int $day): void {
-    $template = __DIR__."/templates/day_template.txt";
+function writeTemplate(string $filepath, int $year, int $day, string $templatePath): void {
     $file = fopen($filepath, 'wb');
-    if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($template), $year, $day, $year, $day))) {
+    if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($templatePath), $year, $day, $year, $day))) {
         throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
     }
 }

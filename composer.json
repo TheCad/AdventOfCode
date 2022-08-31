@@ -7,6 +7,14 @@
             "Thecad\\AdventOfCode\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Thecad\\AdventOfCode\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit tests/ --color"
+    },
     "authors": [
         {
             "name": "TheCad"
