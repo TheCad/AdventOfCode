@@ -11,7 +11,6 @@ class Day01 extends BaseClass {
     }
 
     public function partOne(): int {
-        dump('Running part 1');
         foreach($this->input as $row) {
             $arr = str_split($row);
             $count = array_count_values($arr);
@@ -21,7 +20,6 @@ class Day01 extends BaseClass {
     }
 
     public function partTwo(): int {
-        dump('Running part 2');
         $floorcount = 0;
         $stepcount = 0;
         foreach($this->input as $row) {
