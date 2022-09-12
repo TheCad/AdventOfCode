@@ -9,14 +9,18 @@ require 'vendor/autoload.php';
 
 $cli = Cli::Create()
     ->command('run')
-    ->description('Runs the script of the given year and day ')
+    ->description('Runs the script of the given year and day')
     ->arg('day', 'What day')
     ->arg('year', 'What Year')
     ->arg('part', 'Which part')
     ->command('create')
     ->description('Creates the boilerplate for the given year and day')
     ->arg('day', 'What day', true)
-    ->arg('year', 'What Year');
+    ->arg('year', 'What Year')
+    ->command('test')
+    ->description('Runs the tests of the given year and day')
+    ->arg('day', 'What day')
+    ->arg('year', 'What year');
 
 try {
     $args = $cli->parse($argv);
@@ -35,6 +39,9 @@ switch ($command) {
         break;
     case 'create':
         create($day, $year);
+        break;
+    case 'test':
+        test($day, $year);
         break;
     default:
         dd("BROKEN");
@@ -58,6 +65,16 @@ function run(int $day, int $year, int $part): void {
             dump($class->partOne());
             dump($class->partTwo());
     }
+}
+
+function test(int $day, int $year): void {
+    $testPath = sprintf("%s/tests/Year%d", __DIR__, $year);
+    $testFilePath = sprintf("%s/Day%02dTest.php", $testPath, $day);
+
+    if (!file_exists($testFilePath)) {
+        throw new RuntimeException(sprintf('There is no test for day %d and year %d', $day, $year));
+    }
+    echo shell_exec(sprintf('./vendor/bin/phpunit --color %s',$testFilePath));
 }
 
 function create(int $day, int $year): void {
