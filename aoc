@@ -56,13 +56,17 @@ function run(int $day, int $year, int $part): void {
     $class = new $file();
     switch ($part) {
         case 1:
+            dump('Running part 1');
             dump($class->partOne());
             break;
         case 2:
+            dump('Running part 2');
             dump($class->partTwo());
             break;
         default:
+            dump('Running part 1');
             dump($class->partOne());
+            dump('Running part 2');
             dump($class->partTwo());
     }
 }
@@ -131,7 +135,7 @@ function writeTemplate(string $type, string $filepath, int $year, int $day, stri
             }
             break;
         case 'test':
-            if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($templatePath), $year, $year, $day, $day, $day))) {
+            if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($templatePath), $year, $year, $day, $day, $day, $day))) {
                 throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
             }
             break;

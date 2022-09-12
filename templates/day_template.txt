@@ -11,12 +11,10 @@ class Day%02d extends BaseClass {
     }
 
     public function partOne(): void {
-        dump('Running part 1');
         // Create solution
     }
 
     public function partTwo(): void {
-        dump('Running part 2');
         // Create solution
     }
 }

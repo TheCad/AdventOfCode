@@ -7,6 +7,7 @@ use Thecad\AdventOfCode\Year%d\Day%02d;
 
 class Day%02dTest extends TestCase {
 
+    private Day%02d $sut;
     protected function setUp(): void {
         parent::setUp();
         $this->sut = new Day%02d();
