@@ -29,7 +29,7 @@ try {
 }
 
 $command = $args->getCommand();
-$year = (int)$args->getArg('year', 2022);
+$year = (int)$args->getArg('year', date('Y'));
 $day = (int)$args->getArg('day');
 $part = (int)$args->getArg('part');
 
