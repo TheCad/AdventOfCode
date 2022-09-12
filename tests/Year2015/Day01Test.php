@@ -13,10 +13,16 @@ class Day01Test extends TestCase {
     }
 
     public function testPart1(): void {
-        self::assertTrue(true);
+        $this->sut->setTestInput(['(())']);
+        $exp = 0;
+        $res = $this->sut->partOne();
+        self::assertEquals($exp, $res);
     }
 
     public function testPart2(): void {
-        self::assertTrue(true);
+        $this->sut->setTestInput(['()())']);
+        $exp = 5;
+        $res = $this->sut->partTwo();
+        self::assertEquals($exp, $res);
     }
 }
