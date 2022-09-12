@@ -20,4 +20,8 @@ class BaseClass {
         }
         fclose($file);
     }
+
+    public function setTestInput(array $input) {
+        $this->input = $input;
+    }
 }
