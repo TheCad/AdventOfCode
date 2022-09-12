@@ -10,17 +10,17 @@ class Day01 extends BaseClass {
         parent::__construct();
     }
 
-    public function partOne(): void {
+    public function partOne(): int {
         dump('Running part 1');
         foreach($this->input as $row) {
             $arr = str_split($row);
             $count = array_count_values($arr);
             $res = $count['('] - $count[')'];
-            dump($res);
         }
+        return $res;
     }
 
-    public function partTwo(): void {
+    public function partTwo(): int {
         dump('Running part 2');
         $floorcount = 0;
         $stepcount = 0;
@@ -39,7 +39,7 @@ class Day01 extends BaseClass {
                     break;
                 }
             }
-            dump($stepcount);
         }
+        return $stepcount;
     }
 }
