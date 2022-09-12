@@ -68,8 +68,9 @@ function create(int $day, int $year): void {
     $solutionTemplatePath = sprintf("%s/templates/day_template.txt", __DIR__);
 
     createDirectory($solutionPath);
-    createFile($solutionFilepath);
-    writeTemplate('solution', $solutionFilepath, $year, $day, $solutionTemplatePath);
+    if (createFile($solutionFilepath)) {
+       writeTemplate('solution', $solutionFilepath, $year, $day, $solutionTemplatePath);
+    }
 
     dump(sprintf("Creating input file for year %d and day %d", $year, $day));
     getInput($year, $day);
@@ -81,8 +82,9 @@ function create(int $day, int $year): void {
     $testTemplatePath = sprintf("%s/templates/test_template.txt", __DIR__);
 
     createDirectory($testPath);
-    createFile($testFilePath);
-    writeTemplate('test', $testFilePath, $year, $day, $testTemplatePath);
+    if (createFile($testFilePath)) {
+        writeTemplate('test', $testFilePath, $year, $day, $testTemplatePath);
+    }
 }
 
 function createDirectory(string $path): void {
@@ -91,14 +93,16 @@ function createDirectory(string $path): void {
     }
 }
 
-function createFile(string $filepath): void {
+function createFile(string $filepath): bool {
     if (!file_exists($filepath)) {
         if (!fopen($filepath, 'wb')) {
             throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
         }
     } else {
         dump("File already exists. Skipping...");
+        return false;
     }
+    return true;
 }
 
 function writeTemplate(string $type, string $filepath, int $year, int $day, string $templatePath): void {
