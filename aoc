@@ -20,7 +20,9 @@ $cli = Cli::Create()
     ->command('test')
     ->description('Runs the tests of the given year and day')
     ->arg('day', 'What day')
-    ->arg('year', 'What year');
+    ->arg('year', 'What year')
+    ->command('list')
+    ->description('Shows a list of created solution files');
 
 try {
     $args = $cli->parse($argv);
@@ -42,6 +44,9 @@ switch ($command) {
         break;
     case 'test':
         test($day, $year);
+        break;
+    case 'list':
+        listStatus();
         break;
     default:
         dd("BROKEN");
@@ -69,6 +74,26 @@ function run(int $day, int $year, int $part): void {
             dump('Running part 2');
             dump($class->partTwo());
     }
+}
+
+function listStatus(): void {
+    $db = new SQLite3('stats.db');
+    $arr = [];
+
+    $x = $db->query("SELECT * FROM stats");
+    while ($row = $x->fetchArray()) {
+        $a = new Stat();
+        $a->year = $row['year'];
+        $a->day = $row['day'];
+        $a->is_done = (bool) $row['is_done'];
+        $arr[] = $a;
+    }
+
+    foreach ($arr as $z) {
+        echo "Year: ". $z->year . PHP_EOL;
+        echo "Day : ". $z->day . " is done: " . $z->is_done . PHP_EOL;
+    }
+
 }
 
 function test(int $day, int $year): void {
@@ -174,4 +199,11 @@ function getInput(int $year, int $day): void
     if (!fwrite($file, $response)) {
         throw new RuntimeException(sprintf('File "%s" was not created', $filepath . "input.txt"));
     }
+}
+
+
+class Stat {
+    public $year;
+    public $day;
+    public $is_done;
 }
