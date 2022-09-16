@@ -10,11 +10,15 @@ class Day%02d extends BaseClass {
         parent::__construct();
     }
 
-    public function partOne(): void {
+    public function partOne(): int {
         // Create solution
+
+        return 0;
     }
 
-    public function partTwo(): void {
+    public function partTwo(): int {
         // Create solution
+
+        return 0;
     }
 }
