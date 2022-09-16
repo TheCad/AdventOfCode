@@ -35,6 +35,23 @@ class Day03Test extends TestCase {
     }
 
     public function testPart2(): void {
-        self::assertTrue(true);
+        $this->sut->setTestInput(['^v']);
+        $exp = 3;
+        $res = $this->sut->partTwo();
+        self::assertEquals($exp, $res);
+    }
+
+    public function testPart2Second(): void {
+        $this->sut->setTestInput(['^>v<']);
+        $exp = 3;
+        $res = $this->sut->partTwo();
+        self::assertEquals($exp, $res);
+    }
+
+    public function testPar2Third(): void {
+        $this->sut->setTestInput(['^V^V^V^V^V']);
+        $exp = 11;
+        $res = $this->sut->partTwo();
+        self::assertEquals($exp, $res);
     }
 }
