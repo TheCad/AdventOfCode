@@ -35,6 +35,16 @@ class Day06Test extends TestCase {
     }
 
     public function testPart2(): void {
-        self::assertTrue(true);
+        $this->sut->setTestInput(['turn on 0,0 through 0,0']);
+        $exp = 1;
+        $res = $this->sut->partTwo();
+        self::assertEquals($exp, $res);
+    }
+
+    public function testPart2Second(): void {
+        $this->sut->setTestInput(['toggle 0,0 through 999,999']);
+        $exp = 2000000;
+        $res = $this->sut->partTwo();
+        self::assertEquals($exp, $res);
     }
 }
