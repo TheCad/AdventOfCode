@@ -23,19 +23,16 @@ class Day05 extends BaseClass {
         foreach($this->input as $row) {
             if ($this->checkForIllegal($row)) {
                 $total['naughty']++;
-//                dump("$row contains illegal string");
                 continue;
             }
 
             if ($this->vowelCount($row) < 3) {
                 $total['naughty']++;
-//                dump("$row has a vowel count < 3");
                 continue;
             }
 
             if (!$this->checkLetterInRow($row)) {
                 $total['naughty']++;
-//                dump("$row does not have 2 same letters in a row");
                 continue;
             }
             $total['nice']++;
@@ -45,9 +42,51 @@ class Day05 extends BaseClass {
     }
 
     public function partTwo(): int {
-        // Create solution
+//        echo count(array_filter(file('src/Year2015/inputs/Day05_input.txt'), function ($x) {return preg_match('#(?=.*(..).*\1)(?=.*(.).\2)#',$x);}));
+        $o = array_filter(file('src/Year2015/inputs/Day05_input.txt'), function ($x) {return preg_match('#(?=.*(..).*\1)(?=.*(.).\2)#',$x);});
+        $p = [];
 
-        return 0;
+        $total = ['nice' => 0, 'naughty' => 0];
+        foreach ($this->input as $row) {
+            if (!$this->checkDoubleLetters($row)) {
+                $total['naughty']++;
+                continue;
+            }
+
+            if (!$this->checkInBetween($row)) {
+                $total['naughty']++;
+                continue;
+            }
+            $p[] = $row;
+            $total['nice']++;
+        }
+
+//        dd($o, $p);
+        return $total['nice'];
+    }
+
+    private function checkDoubleLetters(string $row): bool {
+        $c = strlen($row);
+        for ($i = 0; $i < $c - 1; $i++) {
+            $y = substr($row, $i, 2);
+            $x = substr_replace($row, "!!", $i, 2);
+            if (str_contains($x, $y)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function checkInBetween(string $row): bool {
+        $arr = str_split($row);
+        $count = count($arr);
+        for ($i = 0; $i < $count - 2 ; $i++) {
+            if ($arr[$i] === $arr[$i+2]) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private function vowelCount(string $row): int {
