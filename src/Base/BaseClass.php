@@ -21,7 +21,7 @@ class BaseClass {
         fclose($file);
     }
 
-    public function setTestInput(array $input) {
+    public function setTestInput(array $input): void {
         $this->input = $input;
     }
 }
