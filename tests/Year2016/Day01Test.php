@@ -34,10 +34,17 @@ class Day01Test extends TestCase {
         self::assertEquals($exp, $res);
     }
 
-    public function testPart2(): void {
-        $this->sut->setTestInput(['R8, R4, R4, R8']);
-        $exp = 4;
+//    public function testPart2(): void {
+//        $this->sut->setTestInput(['R8, R4, R4, R8']);
+//        $exp = 4;
+//        $res = $this->sut->partTwo();
+//        self::assertEquals($exp, $res);
+//    }
+
+    public function testPart2Second(): void {
+        $this->sut->setTestInput(['R8, L2, R1, R4, L1, L3, L4']);
+        $exp = 10;
         $res = $this->sut->partTwo();
-        \PHPUnit\Framework\assertEquals($exp, $res);
+        self::assertEquals($exp, $res);
     }
 }

@@ -59,7 +59,8 @@ class Day01 extends BaseClass {
             $stepAmount = (int)substr(trim($item), 1);
             $this->changeDirection($turnDir);
 
-            for($i = 0; $i <= $stepAmount; $i++) {
+
+            for($i = 0; $i < $stepAmount; $i++) {
                 switch ($this->direction) {
                     case Direction::North:
                         $this->y++;
@@ -74,7 +75,6 @@ class Day01 extends BaseClass {
                         $this->x--;
                         break;
                 }
-
                 if (array_key_exists($this->x, $alreadyVisited) && array_key_exists($this->y, $alreadyVisited[$this->x])) {
                     return abs($this->x) + abs($this->y);
                 }
