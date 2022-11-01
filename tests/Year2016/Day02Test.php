@@ -14,10 +14,16 @@ class Day02Test extends TestCase {
     }
 
     public function testPart1(): void {
-        self::assertTrue(true);
+        $this->sut->setTestInput(['ULL', 'RRDDD', 'LURDL', 'UUUUD']);
+        $exp = 1985;
+        $res = $this->sut->partOne();
+        self::assertEquals($exp, $res);
     }
 
     public function testPart2(): void {
-        self::assertTrue(true);
+        $this->sut->setTestInput(['ULL', 'RRDDD', 'LURDL', 'UUUUD']);
+        $exp = '5DB3';
+        $res = $this->sut->partTwo();
+        self::assertEquals($exp, $res);
     }
 }
