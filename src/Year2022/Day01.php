@@ -13,17 +13,21 @@ class Day01 extends BaseClass {
 
     public function partOne(): int {
         // Create solution
-        $this->totals = [];
+        $this->resetTotal();
         $this->countCals();
         return max($this->totals);
     }
 
     public function partTwo(): int {
         // Create solution
-        $this->totals = [];
+        $this->resetTotal();
         $this->countCals();
         rsort($this->totals);
         return $this->totals[0] + $this->totals[1] + $this->totals[2];
+    }
+
+    private function resetTotal() {
+        $this->totals = [];
     }
 
     private function countCals() {
