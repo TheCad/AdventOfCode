@@ -8,6 +8,7 @@ class Day07 extends BaseClass {
     public function __construct() {
         $this->relativePath = __DIR__;
         parent::__construct();
+        $this->input = explode(',', $this->input[0]);
     }
 
     public function partOne(): int {
