@@ -11,9 +11,6 @@ jobs:
         uses: JetBrains/qodana-action@main
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
-      - uses: actions/upload-artifact@v2
-        with:
-          path: ${{ github.workspace }}/qodana
       - uses: actions/download-artifact@v2
         id: download
         with:
