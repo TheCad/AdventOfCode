@@ -8,19 +8,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Qodana - Code Inspection
-        uses: Jetbrains/qodana-action@main
+        uses: JetBrains/qodana-action@v2.0-eap
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
-      - name: LS
-        run: ls
       - uses: actions/upload-artifact@v2
         with:
-          path: ${{ github.workspace }}/qodana-report
+          path: ${{ github.workspace }}/qodana
       - uses: actions/download-artifact@v2
         id: download
         with:
           name: 'artifact'
-          path: qodana-report
+          path: qodana
       - name: Deploy to Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
