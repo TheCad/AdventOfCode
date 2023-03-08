@@ -13,12 +13,12 @@ jobs:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
       - uses: actions/upload-artifact@v2
         with:
-          path: ${{ github.workspace }}/qodana
+          path: ${{ github.workspace }}/qodana-report
       - uses: actions/download-artifact@v2
         id: download
         with:
           name: 'artifact'
-          path: qodana
+          path: qodana-report
       - name: Deploy to Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
