@@ -11,6 +11,8 @@ jobs:
         uses: Jetbrains/qodana-action@main
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+      - name: LS
+        run: ls
       - uses: actions/upload-artifact@v2
         with:
           path: ${{ github.workspace }}/qodana-report
