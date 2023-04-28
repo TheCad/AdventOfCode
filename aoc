@@ -32,6 +32,12 @@ try {
 
 $command = $args->getCommand();
 $year = (int)$args->getArg('year', date('Y'));
+if (file_exists('./.year')) {
+    $yearFile = fopen('./.year', 'rb');
+    $yearFileContent = trim(fgets($yearFile));
+    fclose($yearFile);
+    $year = (int)$yearFileContent;
+}
 $day = (int)$args->getArg('day');
 $part = (int)$args->getArg('part');
 
