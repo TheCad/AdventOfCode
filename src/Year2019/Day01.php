@@ -11,34 +11,30 @@ class Day01 extends BaseClass {
     }
 
     public function partOne(): int {
-        // Create solution
         $total = 0;
-
         foreach ($this->input as $line) {
-            $total += $this->calculate($line);
+            $total += $this->calculateFuel($line);
         }
-
         return $total;
     }
 
-    private function calculate($mass) {
-        return floor($mass / 3) - 2;
-    }
-
-    private function calculateRec($mass) {
-        $fuel = $this->calculate($mass);
-        if ($fuel <= 0) {
-            return null;
-        }
-        return $fuel + $this->calculateRec($fuel);
+    private function calculateFuel(int $input): int {
+        return floor($input / 3) - 2;
     }
 
     public function partTwo(): int {
-        // Create solution
         $total = 0;
         foreach ($this->input as $line) {
-            $total += $this->calculateRec($line);
+            $total += $this->calculateFuelRecursive($line);
         }
         return $total;
+    }
+
+    private function calculateFuelRecursive(int $input): int|null {
+        $fuel = $this->calculateFuel($input);
+        if ($fuel <= 0)
+            return null;
+        return $fuel + $this->calculateFuelRecursive($fuel);
+
     }
 }
