@@ -39,18 +39,21 @@ class Run extends Command {
 
         switch ($part) {
             case 1:
-                $this->io->section('Running part 1');
-                $this->io->text($class->partOne());
+                $this->io->definitionList(
+                    ['Part 1' => $class->partOne()],
+                );
                 break;
             case 2:
-                $this->io->section('Running part 2');
-                $this->io->text($class->partTwo());
+                $this->io->definitionList(
+                    ['Part 2' => $class->partTwo()]
+                );
                 break;
             default:
-                $this->io->section('Running part 1');
-                $this->io->text($class->partOne());
-                $this->io->section('Running part 2');
-                $this->io->text($class->partTwo());
+                $this->io->definitionList(
+                    ['Part 1' => $class->partOne()],
+                    ['Part 2' => $class->partTwo()]
+                );
+                break;
         }
 
         return Command::SUCCESS;
