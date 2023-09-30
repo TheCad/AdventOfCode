@@ -1,217 +1,24 @@
 #!/usr/bin/env php
 <?php
-
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-use Garden\Cli\Cli;
+
 use Symfony\Component\Dotenv\Dotenv;
 
 require 'vendor/autoload.php';
 
-$cli = Cli::Create()
-    ->command('run')
-    ->description('Runs the script of the given year and day')
-    ->arg('day', 'What day')
-    ->arg('year', 'What Year')
-    ->arg('part', 'Which part')
-    ->command('create')
-    ->description('Creates the boilerplate for the given year and day')
-    ->arg('day', 'What day', true)
-    ->arg('year', 'What Year')
-    ->command('test')
-    ->description('Runs the tests of the given year and day')
-    ->arg('day', 'What day')
-    ->arg('year', 'What year')
-    ->command('list')
-    ->description('Shows a list of created solution files');
+use Symfony\Component\Console\Application;
+use Thecad\AdventOfCode\Commands\Create;
+use Thecad\AdventOfCode\Commands\Run;
+use Thecad\AdventOfCode\Commands\Test;
+
+$application = new Application();
+
+$application->add(new Create());
+$application->add(new Run());
+$application->add(new Test());
 
 try {
-    $args = $cli->parse($argv);
+    $application->run();
 } catch (Exception $e) {
-    dd($e->getMessage());
-}
-
-$command = $args->getCommand();
-$year = (int)$args->getArg('year');
-if (0 === $year && file_exists('./.year')) {
-    $yearFile = fopen('./.year', 'rb');
-    $yearFileContent = trim(fgets($yearFile));
-    fclose($yearFile);
-    $year = (int)$yearFileContent;
-} else {
-    $date = date('Y');
-}
-$day = (int)$args->getArg('day');
-$part = (int)$args->getArg('part');
-
-switch ($command) {
-    case 'run':
-        run($day, $year, $part);
-        break;
-    case 'create':
-        create($day, $year);
-        break;
-    case 'test':
-        test($day, $year);
-        break;
-    case 'list':
-        listStatus();
-        break;
-    default:
-        dd("BROKEN");
-}
-
-function run(int $day, int $year, int $part): void {
-    $file = sprintf("Thecad\AdventOfCode\Year%d\Day%02d", $year, $day);
-    if (!class_exists($file)) {
-        dump("This day has not yet been created");
-        return;
-    }
-    $class = new $file();
-    switch ($part) {
-        case 1:
-            dump('Running part 1');
-            dump($class->partOne());
-            break;
-        case 2:
-            dump('Running part 2');
-            dump($class->partTwo());
-            break;
-        default:
-            dump('Running part 1');
-            dump($class->partOne());
-            dump('Running part 2');
-            dump($class->partTwo());
-    }
-}
-
-function listStatus(): void {
-    $db = new SQLite3('stats.db');
-    $arr = [];
-
-    $x = $db->query("SELECT * FROM stats");
-    while ($row = $x->fetchArray()) {
-        $a = new Stat();
-        $a->year = $row['year'];
-        $a->day = $row['day'];
-        $a->is_done = (bool) $row['is_done'];
-        $arr[] = $a;
-    }
-
-    foreach ($arr as $z) {
-        echo "Year: ". $z->year . PHP_EOL;
-        echo "Day : ". $z->day . " is done: " . $z->is_done . PHP_EOL;
-    }
-
-}
-
-function test(int $day, int $year): void {
-    $testPath = sprintf("%s/tests/Year%d", __DIR__, $year);
-    $testFilePath = sprintf("%s/Day%02dTest.php", $testPath, $day);
-
-    if (!file_exists($testFilePath)) {
-        throw new RuntimeException(sprintf('There is no test for day %d and year %d', $day, $year));
-    }
-    echo shell_exec(sprintf('./vendor/bin/phpunit --color %s',$testFilePath));
-}
-
-function create(int $day, int $year): void {
-    dump(sprintf("Creating solution file for year %d and day %d", $year, $day));
-
-    $solutionPath = sprintf("%s/src/Year%d", __DIR__ , $year);
-    $solutionFilepath = sprintf("%s/Day%02d.php", $solutionPath , $day);
-    $solutionTemplatePath = sprintf("%s/templates/day_template.txt", __DIR__);
-
-    createDirectory($solutionPath);
-    if (createFile($solutionFilepath)) {
-       writeTemplate('solution', $solutionFilepath, $year, $day, $solutionTemplatePath);
-    }
-
-    dump(sprintf("Creating input file for year %d and day %d", $year, $day));
-    getInput($year, $day);
-
-    dump(sprintf("Creating test file for year %d and day %d", $year, $day));
-
-    $testPath = sprintf("%s/tests/Year%d", __DIR__, $year);
-    $testFilePath = sprintf("%s/Day%02dTest.php", $testPath, $day);
-    $testTemplatePath = sprintf("%s/templates/test_template.txt", __DIR__);
-
-    createDirectory($testPath);
-    if (createFile($testFilePath)) {
-        writeTemplate('test', $testFilePath, $year, $day, $testTemplatePath);
-    }
-}
-
-function createDirectory(string $path): void {
-    if (!file_exists($path) && !mkdir($path, 0755, true) && !is_dir($path)) {
-        throw new RuntimeException(sprintf('Directory "%s" was not created', $path));
-    }
-}
-
-function createFile(string $filepath): bool {
-    if (!file_exists($filepath)) {
-        if (!fopen($filepath, 'wb')) {
-            throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
-        }
-    } else {
-        dump("File already exists. Skipping...");
-        return false;
-    }
-    return true;
-}
-
-function writeTemplate(string $type, string $filepath, int $year, int $day, string $templatePath): void {
-    $file = fopen($filepath, 'wb');
-    switch ($type) {
-        case 'solution':
-            if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($templatePath), $year, $day, $year, $day))) {
-                throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
-            }
-            break;
-        case 'test':
-            if (file_exists($filepath) && !fwrite($file, sprintf(file_get_contents($templatePath), $year, $year, $day, $day, $day, $day))) {
-                throw new RuntimeException(sprintf('File "%s" was not created', $filepath));
-            }
-            break;
-        default:
-            break;
-    }
-}
-
-function getInput(int $year, int $day): void
-{
-    $path = sprintf("%s/src/Year%d/inputs", __DIR__ , $year);
-    $filepath = sprintf("%s/Day%02d_input.txt", $path, $day);
-    if (!file_exists($path) && !mkdir($path, 0755, true) && !is_dir($path)) {
-        throw new RuntimeException(sprintf('Directory "%s" was not created', $path));
-    }
-
-    if (file_exists($filepath)) {
-        dump("Input file already exists. Skipping...");
-        return;
-    }
-
-    (new Dotenv())->usePutenv()->bootEnv(__DIR__.'/.env');
-
-    $url = sprintf("https://adventofcode.com/%d/day/%d/input", $year, $day);
-    $curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    $headers = array(
-        sprintf("Cookie: session=%s", getenv('SESSION')),
-    );
-    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-    $response = curl_exec($curl);
-    curl_close($curl);
-
-    $file = fopen($filepath, 'wb');
-    if (!fwrite($file, $response)) {
-        throw new RuntimeException(sprintf('File "%s" was not created', $filepath . "input.txt"));
-    }
-}
-
-
-class Stat {
-    public $year;
-    public $day;
-    public $is_done;
+    dump($e->getMessage());
 }

@@ -29,6 +29,6 @@
     "require": {
         "symfony/dotenv": "^6.1",
         "ext-curl": "*",
-        "ext-sqlite3": "*"
+        "symfony/console": "^6.3"
     }
 }
