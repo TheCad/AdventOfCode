@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Dotenv\Dotenv;
 
-#[AsCommand(name: 'create')]
+#[AsCommand(name: 'create', description: 'Create the solution file, test file and downloads the input')]
 class Create extends Command {
     protected SymfonyStyle $io;
     protected function configure(): void {

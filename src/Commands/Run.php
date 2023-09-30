@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Dotenv\Dotenv;
 
-#[AsCommand(name: 'run')]
+#[AsCommand(name: 'run', description: 'Runs the given year and day.')]
 class Run extends Command {
     protected SymfonyStyle $io;
 
@@ -18,8 +18,8 @@ class Run extends Command {
         (new Dotenv())->usePutenv()->bootEnv(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . '.env');
         $setYear = getenv('YEAR');
         $this
-            ->addArgument('day', InputArgument::OPTIONAL, 'For what day do you want to create', (int)date('d'))
-            ->addArgument('year', InputArgument::OPTIONAL, 'For what year do you want to create', $setYear ?: date('Y'))
+            ->addArgument('day', InputArgument::OPTIONAL, 'What day do you want to run?', (int)date('d'))
+            ->addArgument('year', InputArgument::OPTIONAL, 'What year do you want to run?', $setYear ?: date('Y'))
             ->addArgument('part', InputArgument::OPTIONAL, 'Which part do you want to run?', null);
     }
 

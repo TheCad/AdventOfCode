@@ -11,15 +11,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Dotenv\Dotenv;
 
-#[AsCommand(name: 'test')]
+#[AsCommand(name: 'test', description: 'Runs the test for the given day and year')]
 class Test extends Command {
     protected SymfonyStyle $io;
     protected function configure(): void {
         (new Dotenv())->usePutenv()->bootEnv(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . '.env');
         $setYear = getenv('YEAR');
         $this
-            ->addArgument('day', InputArgument::OPTIONAL, 'For what day do you want to create', (int)date('d'))
-            ->addArgument('year', InputArgument::OPTIONAL, 'For what year do you want to create', $setYear ?: date('Y'));
+            ->addArgument('day', InputArgument::OPTIONAL, 'Which day do you want to test?', (int)date('d'))
+            ->addArgument('year', InputArgument::OPTIONAL, 'Which year do you want to test?', $setYear ?: date('Y'));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
