@@ -20,4 +20,4 @@ test &emsp; Runs the tests of the given year and day
 `./aoc test 1 2015`\
 `./aoc run 1 2015`
 
-If no year is given there will be a check if `.year` has a year number otherwise the current year will be used.
+If no year is given your .env file will be checked for a YEAR variable otherwise the current year will get used
