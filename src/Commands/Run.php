@@ -32,7 +32,7 @@ class Run extends Command {
 
         $file = sprintf("Thecad\AdventOfCode\Year%d\Day%02d", $year, $day);
         if (!class_exists($file)) {
-            $io->error("This day has not yet been created");
+            $this->io->error("This day has not yet been created");
             return Command::INVALID;
         }
         $class = new $file();
