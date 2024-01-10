@@ -131,6 +131,7 @@ class Create extends Command {
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_USERAGENT, 'github.com/TheCad/AdventOfCode.git by TheCad<email@thecad.dev>');
         $headers = array(
             sprintf("Cookie: session=%s", getenv('SESSION')),
         );
