@@ -6,9 +6,6 @@ use Thecad\AdventOfCode\Base\BaseClass;
 
 class Day01 extends BaseClass
 {
-  public $arr1 = array();
-  public $arr2 = array();
-
   public function __construct()
   {
     $this->relativePath = __DIR__;
