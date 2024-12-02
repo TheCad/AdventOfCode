@@ -23,12 +23,12 @@ class Day01Test extends TestCase
     self::assertEquals($exp, $actual);
   }
 
-  // public function testPart2(): void
-  // {
-  //   $actual = $this->sut->partTwo();
-  //   $exp = 31;
-  //   self::assertEquals($exp, $actual);
-  // }
+  public function testPart2(): void
+  {
+    $actual = $this->sut->partTwo();
+    $exp = 31;
+    self::assertEquals($exp, $actual);
+  }
 
   public function testPart2_1(): void
   {
