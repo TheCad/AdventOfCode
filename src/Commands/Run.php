@@ -67,7 +67,7 @@ class Run extends Command
     $start = microtime(true);
     $part = $class->partOne();
     $end = microtime(true);
-    return sprintf("%d, took %f ms", $part, ($end - $start));
+    return sprintf("%d took %f ms", $part, ($end - $start));
   }
 
   private function partTwo($class)
@@ -75,6 +75,6 @@ class Run extends Command
     $start = microtime(true);
     $part = $class->partTwo();
     $end = microtime(true);
-    return sprintf("%d, took %f ms", $part, ($end - $start));
+    return sprintf("%d took %f ms", $part, ($end - $start));
   }
 }
