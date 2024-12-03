@@ -14,6 +14,7 @@ class Day03 extends BaseClass
 
   public function partOne(): int
   {
+    $this->input = [implode('', $this->input)];
     // Create solution
     $matcharr = [];
     $total = 0;
