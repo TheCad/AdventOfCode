@@ -12,6 +12,7 @@ class Day04 extends BaseClass {
 
     public function partOne(): int {
         // Create solution
+      dd('wow');
 
         return 0;
     }
