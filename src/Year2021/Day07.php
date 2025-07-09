@@ -4,14 +4,17 @@ namespace Thecad\AdventOfCode\Year2021;
 
 use Thecad\AdventOfCode\Base\BaseClass;
 
-class Day07 extends BaseClass {
-    public function __construct() {
+class Day07 extends BaseClass
+{
+    public function __construct()
+    {
         $this->relativePath = __DIR__;
         parent::__construct();
         $this->input = explode(',', $this->input[0]);
     }
 
-    public function partOne(): int {
+    public function partOne(): int
+    {
         $amount = PHP_INT_MAX;
         $list = array_count_values($this->input);
         arsort($list);
@@ -23,7 +26,8 @@ class Day07 extends BaseClass {
         return $amount;
     }
 
-    public function partTwo(): int {
+    public function partTwo(): int
+    {
         $amount = PHP_INT_MAX;
         $res = [];
 
@@ -32,25 +36,33 @@ class Day07 extends BaseClass {
             $res[] = $fuel;
         }
         sort($res);
+
         return $res[0];
     }
 
-    public function getAmountOfFuel($horpos) {
+    public function getAmountOfFuel($horpos)
+    {
         $temp = [];
         foreach ($this->input as $item) {
             $fuelcost = (int) $horpos - (int) $item;
-            if ($fuelcost < 0) $fuelcost = -$fuelcost;
+            if ($fuelcost < 0) {
+                $fuelcost = -$fuelcost;
+            }
             $temp[] = $fuelcost;
         }
+
         return $temp;
     }
 
-    public function getAmountOfFuelIncremental($horpos) {
+    public function getAmountOfFuelIncremental($horpos)
+    {
         $temp = [];
 
         foreach ($this->input as $item) {
             $fuelcost = abs($horpos - (int) $item);
-            if ($fuelcost < 0) $fuelcost = -$fuelcost;
+            if ($fuelcost < 0) {
+                $fuelcost = -$fuelcost;
+            }
             $temp[] = array_sum(range(0, $fuelcost, 1));
         }
         $res = array_sum($temp);
