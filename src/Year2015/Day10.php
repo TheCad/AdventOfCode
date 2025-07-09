@@ -26,11 +26,6 @@ class Day10 extends BaseClass
         return $this->lookAndSay($loopAmount, $string);
     }
 
-    /**
-     * @param int $loopAmount
-     * @param string $string
-     * @return string
-     */
     public function lookAndSay(int $loopAmount, string $string): string
     {
         $endStr = '';
