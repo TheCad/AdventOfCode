@@ -28,7 +28,6 @@ class Day10 extends BaseClass
 
     public function lookAndSay(int $loopAmount, string $string): string
     {
-        $endStr = '';
         for ($iteration = 0; $iteration < $loopAmount; $iteration++) {
             if (strlen($string) === 1) {
                 return '1' . $string;

@@ -28,7 +28,7 @@ class Day10Test extends TestCase
     {
         $this->sut->setTestInput(['11']);
         $actual = $this->sut->partOne();
-        $exp = '21';
+        $exp = '107312';
         self::assertEquals($exp, $actual);
     }
 
@@ -36,7 +36,7 @@ class Day10Test extends TestCase
     {
         $this->sut->setTestInput(['21']);
         $actual = $this->sut->partOne();
-        $exp = '1211';
+        $exp = '139984';
         self::assertEquals($exp, $actual);
     }
 
@@ -44,7 +44,7 @@ class Day10Test extends TestCase
     {
         $this->sut->setTestInput(['1211']);
         $actual = $this->sut->partOne();
-        $exp = '111221';
+        $exp = '182376';
         self::assertEquals($exp, $actual);
     }
 
@@ -52,7 +52,7 @@ class Day10Test extends TestCase
     {
         $this->sut->setTestInput(['111221']);
         $actual = $this->sut->partOne();
-        $exp = '312211';
+        $exp = '237746';
         self::assertEquals($exp, $actual);
     }
 
