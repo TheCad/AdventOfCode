@@ -1,36 +1,37 @@
 {
-    "name": "thecad/advent-of-code",
-    "description": "Advent of Code Repository",
-    "type": "project",
-    "autoload": {
-        "psr-4": {
-            "Thecad\\AdventOfCode\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Thecad\\AdventOfCode\\Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "test": "phpunit tests/ --color"
-    },
-    "authors": [
-        {
-            "name": "TheCad"
-        }
-    ],
-    "require-dev": {
-        "roave/security-advisories": "dev-latest",
-        "symfony/var-dumper": "^6.1",
-        "vanilla/garden-cli": "^3.1",
-        "phpunit/phpunit": "^9",
-        "phpstan/phpstan": "^2.1"
-    },
-    "require": {
-        "symfony/dotenv": "^6.1",
-        "ext-curl": "*",
-        "symfony/console": "^6.3",
-        "laravel/helpers": "^1.7"
+  "name": "thecad/advent-of-code",
+  "description": "Advent of Code Repository",
+  "type": "project",
+  "autoload": {
+    "psr-4": {
+      "Thecad\\AdventOfCode\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Thecad\\AdventOfCode\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit tests/ --color"
+  },
+  "authors": [
+    {
+      "name": "TheCad"
+    }
+  ],
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "symfony/var-dumper": "^6.1",
+    "vanilla/garden-cli": "^3.1",
+    "phpunit/phpunit": "^9",
+    "phpstan/phpstan": "^2.1"
+  },
+  "require": {
+    "symfony/dotenv": "^6.1",
+    "ext-curl": "*",
+    "symfony/console": "^6.3",
+    "laravel/helpers": "^1.7",
+    "ext-xdebug": "*"
+  }
 }
