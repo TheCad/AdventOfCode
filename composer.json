@@ -24,11 +24,13 @@
         "roave/security-advisories": "dev-latest",
         "symfony/var-dumper": "^6.1",
         "vanilla/garden-cli": "^3.1",
-        "phpunit/phpunit": "^9"
+        "phpunit/phpunit": "^9",
+        "phpstan/phpstan": "^2.1"
     },
     "require": {
         "symfony/dotenv": "^6.1",
         "ext-curl": "*",
-        "symfony/console": "^6.3"
+        "symfony/console": "^6.3",
+        "laravel/helpers": "^1.7"
     }
 }
