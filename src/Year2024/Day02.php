@@ -6,76 +6,80 @@ use Thecad\AdventOfCode\Base\BaseClass;
 
 class Day02 extends BaseClass
 {
-  public function __construct()
-  {
-    $this->relativePath = __DIR__;
-    parent::__construct();
-  }
-
-  public function partOne(): int
-  {
-    $total = 0;
-    foreach ($this->input as $row) {
-      $ex = explode(' ', $row);
-      if ($this->isValid($ex)) $total++;
+    public function __construct()
+    {
+        $this->relativePath = __DIR__;
+        parent::__construct();
     }
 
-    return $total;
-  }
+    public function partOne(): int
+    {
+        $total = 0;
+        foreach ($this->input as $row) {
+            $ex = explode(' ', $row);
+            if ($this->isValid($ex)) {
+                $total++;
+            }
+        }
 
-  public function partTwo(): int
-  {
-    $total = 0;
-    foreach ($this->input as $row) {
-      if ($this->isSafeTwo($row)) $total++;
+        return $total;
     }
 
-    return $total;
-  }
+    public function partTwo(): int
+    {
+        $total = 0;
+        foreach ($this->input as $row) {
+            if ($this->isSafeTwo($row)) {
+                $total++;
+            }
+        }
 
-  private function isSafeTwo($row): bool
-  {
-    $ex = explode(' ', $row);
-
-    if ($this->isValid($ex)) {
-      return true;
+        return $total;
     }
 
-    for ($removeIndex = 0; $removeIndex < count($ex); $removeIndex++) {
-      $newEx = array_values(array_merge(array_slice($ex, 0, $removeIndex), array_slice($ex, $removeIndex + 1)));
+    private function isSafeTwo($row): bool
+    {
+        $ex = explode(' ', $row);
 
-      if ($this->isValid($newEx)) {
-        return true;
-      }
-    }
+        if ($this->isValid($ex)) {
+            return true;
+        }
 
-    return false;
-  }
+        for ($removeIndex = 0; $removeIndex < count($ex); $removeIndex++) {
+            $newEx = array_values(array_merge(array_slice($ex, 0, $removeIndex), array_slice($ex, $removeIndex + 1)));
 
-  private function isValid(array $arr): bool
-  {
-    if (count($arr) < 2) {
-      return false;
-    }
+            if ($this->isValid($newEx)) {
+                return true;
+            }
+        }
 
-    $isIncreasing = true;
-    $isDecreasing = true;
-
-    for ($i = 0; $i < count($arr) - 1; $i++) {
-      $diff = abs($arr[$i] - $arr[$i + 1]);
-
-      if ($diff < 1 || $diff > 3) {
         return false;
-      }
-
-      if ($arr[$i] >= $arr[$i + 1]) {
-        $isIncreasing = false;
-      }
-      if ($arr[$i] <= $arr[$i + 1]) {
-        $isDecreasing = false;
-      }
     }
 
-    return $isIncreasing || $isDecreasing;
-  }
+    private function isValid(array $arr): bool
+    {
+        if (count($arr) < 2) {
+            return false;
+        }
+
+        $isIncreasing = true;
+        $isDecreasing = true;
+
+        for ($i = 0; $i < count($arr) - 1; $i++) {
+            $diff = abs($arr[$i] - $arr[$i + 1]);
+
+            if ($diff < 1 || $diff > 3) {
+                return false;
+            }
+
+            if ($arr[$i] >= $arr[$i + 1]) {
+                $isIncreasing = false;
+            }
+            if ($arr[$i] <= $arr[$i + 1]) {
+                $isDecreasing = false;
+            }
+        }
+
+        return $isIncreasing || $isDecreasing;
+    }
 }

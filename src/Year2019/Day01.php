@@ -20,7 +20,6 @@ class Day01 extends BaseClass
         }
         $this->calculateFuelRecursive($total);
 
-
         return $total;
     }
 

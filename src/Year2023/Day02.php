@@ -97,4 +97,3 @@ class Day02 extends BaseClass
         return $total;
     }
 }
-

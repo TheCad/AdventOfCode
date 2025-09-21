@@ -4,63 +4,70 @@ namespace Thecad\AdventOfCode\Year2016;
 
 use Thecad\AdventOfCode\Base\BaseClass;
 
-enum Direction {
+enum Direction
+{
     case North;
     case East;
     case South;
     case West;
 }
 
-class Day01 extends BaseClass {
-    public function __construct() {
+class Day01 extends BaseClass
+{
+    public function __construct()
+    {
         $this->relativePath = __DIR__;
         parent::__construct();
     }
 
     public Direction $direction = Direction::North;
+
     public int $x = 0;
+
     public int $y = 0;
 
-    public function partOne(): int {
+    public function partOne(): int
+    {
         // Create solution
 
         $input = explode(',', $this->input[0]);
         foreach ($input as $item) {
             $turnDir = strtolower(trim($item)[0]);
-            $stepAmount = (int)substr(trim($item), 1);
+            $stepAmount = (int) substr(trim($item), 1);
             $this->changeDirection($turnDir);
             switch ($this->direction) {
                 case Direction::North:
-                        $this->y += $stepAmount;
+                    $this->y += $stepAmount;
                     break;
                 case Direction::East:
-                        $this->x += $stepAmount;
+                    $this->x += $stepAmount;
                     break;
                 case Direction::South:
-                        $this->y -= $stepAmount;
+                    $this->y -= $stepAmount;
                     break;
                 case Direction::West:
-                        $this->x -= $stepAmount;
+                    $this->x -= $stepAmount;
                     break;
             }
         }
         $result = abs($this->x) + abs($this->y);
-        return ($result);
+
+        return $result;
     }
 
-    public function partTwo(): int {
+    public function partTwo(): int
+    {
         // Create solution
         $this->resetGlobs();
-        $alreadyVisited = array(array());
+        $alreadyVisited = [[]];
         $alreadyVisited[0][0] = 'x';
         $input = explode(',', $this->input[0]);
         foreach ($input as $item) {
             $turnDir = strtolower(trim($item)[0]);
-            $stepAmount = (int)substr(trim($item), 1);
+            $stepAmount = (int) substr(trim($item), 1);
             $this->changeDirection($turnDir);
 
-
-            for($i = 0; $i < $stepAmount; $i++) {
+            for ($i = 0; $i < $stepAmount; $i++) {
                 switch ($this->direction) {
                     case Direction::North:
                         $this->y++;
@@ -82,7 +89,8 @@ class Day01 extends BaseClass {
             }
         }
         $result = abs($this->x) + abs($this->y);
-        return ($result);
+
+        return $result;
     }
 
     private function changeDirection(string $turnDir)
@@ -119,7 +127,8 @@ class Day01 extends BaseClass {
         }
     }
 
-    private function resetGlobs(): void {
+    private function resetGlobs(): void
+    {
         $this->direction = Direction::North;
         $this->x = 0;
         $this->y = 0;

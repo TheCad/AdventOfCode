@@ -17,7 +17,7 @@ class Create extends Command
   protected SymfonyStyle $io;
   protected function configure(): void
   {
-    (new Dotenv())->usePutenv()->bootEnv(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . '.env');
+    new Dotenv()->usePutenv()->bootEnv(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . '.env');
     $setYear = getenv('YEAR');
     $this
       ->addArgument('day', InputArgument::OPTIONAL, 'For what day do you want to create', (int)date('d'))

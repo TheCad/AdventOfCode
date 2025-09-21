@@ -4,17 +4,20 @@ namespace Thecad\AdventOfCode\Year2015;
 
 use Thecad\AdventOfCode\Base\BaseClass;
 
-class Day03 extends BaseClass {
-    public function __construct() {
+class Day03 extends BaseClass
+{
+    public function __construct()
+    {
         $this->relativePath = __DIR__;
         parent::__construct();
     }
 
-    public function partOne(): int {
-        $visited = array();
+    public function partOne(): int
+    {
+        $visited = [];
         $x = $y = 0;
-        $visited["0.0"] = 1;
-        foreach($this->input as $row) {
+        $visited['0.0'] = 1;
+        foreach ($this->input as $row) {
             $arr = str_split($row);
             foreach ($arr as $step) {
                 switch ($step) {
@@ -39,14 +42,16 @@ class Day03 extends BaseClass {
         }
 
         $res = array_count_values($visited);
+
         return $res[1];
     }
 
-    public function partTwo(): int {
-        $santa = new Stepper();
-        $robo = new Stepper();
-        $santa->visisted["0.0"] = 1;
-        $robo->visisted["0.0"] = 1;
+    public function partTwo(): int
+    {
+        $santa = new Stepper;
+        $robo = new Stepper;
+        $santa->visisted['0.0'] = 1;
+        $robo->visisted['0.0'] = 1;
         $x = 0;
 
         foreach ($this->input as $row) {
@@ -62,15 +67,21 @@ class Day03 extends BaseClass {
             }
         }
         $total = array_unique(array_merge(array_keys($santa->visisted), array_keys($robo->visisted)));
+
         return count($total);
     }
 }
 
-class Stepper {
-    public int $x = 0, $y = 0;
+class Stepper
+{
+    public int $x = 0;
+
+    public int $y = 0;
+
     public array $visisted = [];
 
-    public function step(string $direction) {
+    public function step(string $direction)
+    {
         switch ($direction) {
             case '>':
                 $this->x++;

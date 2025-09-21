@@ -5,77 +5,80 @@ namespace Thecad\AdventOfCode\Tests\Year2015;
 use PHPUnit\Framework\TestCase;
 use Thecad\AdventOfCode\Year2015\Day05;
 
-class Day05Test extends TestCase {
-
+class Day05Test extends TestCase
+{
     private Day05 $sut;
-    protected function setUp(): void {
+
+    protected function setUp(): void
+    {
         parent::setUp();
-        $this->sut = new Day05();
+        $this->sut = new Day05;
     }
 
-//    public function testPart1(): void {
-//        $this->sut->setTestInput(['ugknbfddgicrmopn', 'aaa', 'jchzalrnumimnmhp', 'haegwjzuvuyypxyu', 'dvszwmarrgswjxmb']);
-//        $exp = 2;
-//        $res = $this->sut->partOne();
-//        self::assertEquals($exp, $res);
-//    }
-//
-//    public function testPart1Second(): void {
-//        $this->sut->setTestInput(['aaa', 'aabcde', 'aedcuu']);
-//        $exp = 2;
-//        $res = $this->sut->partOne();
-//        self::assertEquals($exp, $res);
-//    }
-//
-//    public function testPart1illegals(): void {
-//        $this->sut->setTestInput(['aaa', 'aaac', 'aaacd', 'aaapq', 'aaaxy', 'axyaxya']);
-//        $exp = 2;
-//        $res = $this->sut->partOne();
-//        self::assertEquals($exp, $res);
-//    }
-//
-//    public function testPart1Doubles(): void {
-//        $this->sut->setTestInput(["cacacaa", "cacacca", "cacaca"] );
-//        $exp = 2;
-//        $res = $this->sut->partOne();
-//        self::assertEquals($exp, $res);
-//    }
-//
-//    public function testPast1Vowels(): void {
-//        $this->sut->setTestInput(['aaa', 'bbb', 'eee', 'iii', 'uuu', 'ooo']);
-//        $exp = 5;
-//        $res = $this->sut->partOne();
-//        self::assertEquals($exp, $res);
-//    }
-//
-//    public function testPart1Weird(): void {
-//        $this->sut->setTestInput(['aaa', 'xycjvvsuaxsbrqal']);
-//        $exp = 1;
-//        $res = $this->sut->partOne();
-//        self::assertEquals($exp, $res);
-//    }
-//
-//    public function testPart2(): void {
-//        $this->sut->setTestInput(['qjhvhtzxzqqjkmpb', 'xxyxx', 'uurcxstgmygtbstg', 'ieodomkazucvgmuy']);
-//        $exp = 2;
-//        $res = $this->sut->partTwo();
-//        self::assertEquals($exp, $res);
-//    }
-//
-//    public function testPart2Doubles(): void {
-//        $this->sut->setTestInput(['aaaxyx', 'ababxyx', 'aapowekrpaaxyx']);
-//        $exp = 2;
-//        $res = $this->sut->partTwo();
-//        self::assertEquals($exp, $res);
-//    }
-//    public function testPart2Between(): void {
-//        $this->sut->setTestInput(['bbttbbaaa', 'aaabbttbb', 'xyxbbttbb', 'abcdefeabcd']);
-//        $exp = 4;
-//        $res = $this->sut->partTwo();
-//        self::assertEquals($exp, $res);
-//    }
+    //    public function testPart1(): void {
+    //        $this->sut->setTestInput(['ugknbfddgicrmopn', 'aaa', 'jchzalrnumimnmhp', 'haegwjzuvuyypxyu', 'dvszwmarrgswjxmb']);
+    //        $exp = 2;
+    //        $res = $this->sut->partOne();
+    //        self::assertEquals($exp, $res);
+    //    }
+    //
+    //    public function testPart1Second(): void {
+    //        $this->sut->setTestInput(['aaa', 'aabcde', 'aedcuu']);
+    //        $exp = 2;
+    //        $res = $this->sut->partOne();
+    //        self::assertEquals($exp, $res);
+    //    }
+    //
+    //    public function testPart1illegals(): void {
+    //        $this->sut->setTestInput(['aaa', 'aaac', 'aaacd', 'aaapq', 'aaaxy', 'axyaxya']);
+    //        $exp = 2;
+    //        $res = $this->sut->partOne();
+    //        self::assertEquals($exp, $res);
+    //    }
+    //
+    //    public function testPart1Doubles(): void {
+    //        $this->sut->setTestInput(["cacacaa", "cacacca", "cacaca"] );
+    //        $exp = 2;
+    //        $res = $this->sut->partOne();
+    //        self::assertEquals($exp, $res);
+    //    }
+    //
+    //    public function testPast1Vowels(): void {
+    //        $this->sut->setTestInput(['aaa', 'bbb', 'eee', 'iii', 'uuu', 'ooo']);
+    //        $exp = 5;
+    //        $res = $this->sut->partOne();
+    //        self::assertEquals($exp, $res);
+    //    }
+    //
+    //    public function testPart1Weird(): void {
+    //        $this->sut->setTestInput(['aaa', 'xycjvvsuaxsbrqal']);
+    //        $exp = 1;
+    //        $res = $this->sut->partOne();
+    //        self::assertEquals($exp, $res);
+    //    }
+    //
+    //    public function testPart2(): void {
+    //        $this->sut->setTestInput(['qjhvhtzxzqqjkmpb', 'xxyxx', 'uurcxstgmygtbstg', 'ieodomkazucvgmuy']);
+    //        $exp = 2;
+    //        $res = $this->sut->partTwo();
+    //        self::assertEquals($exp, $res);
+    //    }
+    //
+    //    public function testPart2Doubles(): void {
+    //        $this->sut->setTestInput(['aaaxyx', 'ababxyx', 'aapowekrpaaxyx']);
+    //        $exp = 2;
+    //        $res = $this->sut->partTwo();
+    //        self::assertEquals($exp, $res);
+    //    }
+    //    public function testPart2Between(): void {
+    //        $this->sut->setTestInput(['bbttbbaaa', 'aaabbttbb', 'xyxbbttbb', 'abcdefeabcd']);
+    //        $exp = 4;
+    //        $res = $this->sut->partTwo();
+    //        self::assertEquals($exp, $res);
+    //    }
 
-    public function testPart2After(): void {
+    public function test_part2_after(): void
+    {
         $this->sut->setTestInput(['zztdcqzqddaazdjp', 'aaaxyxy']);
         $exp = 1;
         $res = $this->sut->partTwo();

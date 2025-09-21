@@ -7,16 +7,15 @@ use Thecad\AdventOfCode\Year2015\Day10;
 
 class Day10Test extends TestCase
 {
-
     private Day10 $sut;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->sut = new Day10();
+        $this->sut = new Day10;
     }
 
-    public function testOne(): void
+    public function test_one(): void
     {
         $this->sut->setTestInput(['1']);
         $actual = $this->sut->partOne();
@@ -24,7 +23,7 @@ class Day10Test extends TestCase
         self::assertEquals($exp, $actual);
     }
 
-    public function testSecond(): void
+    public function test_second(): void
     {
         $this->sut->setTestInput(['11']);
         $actual = $this->sut->partOne();
@@ -32,7 +31,7 @@ class Day10Test extends TestCase
         self::assertEquals($exp, $actual);
     }
 
-    public function testThird(): void
+    public function test_third(): void
     {
         $this->sut->setTestInput(['21']);
         $actual = $this->sut->partOne();
@@ -40,7 +39,7 @@ class Day10Test extends TestCase
         self::assertEquals($exp, $actual);
     }
 
-    public function testForth(): void
+    public function test_forth(): void
     {
         $this->sut->setTestInput(['1211']);
         $actual = $this->sut->partOne();
@@ -48,7 +47,7 @@ class Day10Test extends TestCase
         self::assertEquals($exp, $actual);
     }
 
-    public function testFifth(): void
+    public function test_fifth(): void
     {
         $this->sut->setTestInput(['111221']);
         $actual = $this->sut->partOne();
@@ -56,10 +55,9 @@ class Day10Test extends TestCase
         self::assertEquals($exp, $actual);
     }
 
-    public function testPart2(): void
+    public function test_part2(): void
     {
         $this->sut->partTwo();
         self::assertTrue(true);
     }
 }
-

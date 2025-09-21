@@ -16,6 +16,7 @@ class Day10 extends BaseClass
     {
         $string = $this->input[0];
         $loopAmount = 40;
+
         return $this->lookAndSay($loopAmount, $string);
     }
 
@@ -23,6 +24,7 @@ class Day10 extends BaseClass
     {
         $string = $this->input[0];
         $loopAmount = 50;
+
         return $this->lookAndSay($loopAmount, $string);
     }
 
@@ -30,7 +32,7 @@ class Day10 extends BaseClass
     {
         for ($iteration = 0; $iteration < $loopAmount; $iteration++) {
             if (strlen($string) === 1) {
-                return '1' . $string;
+                return '1'.$string;
             }
 
             $endStr = '';
@@ -40,13 +42,13 @@ class Day10 extends BaseClass
                 if (isset($string[$i + 1]) && $string[$i] === $string[$i + 1]) {
                     $count++;
                 } else {
-                    $endStr .= $count . $string[$i];
+                    $endStr .= $count.$string[$i];
                     $count = 1;
                 }
             }
             $string = $endStr;
         }
+
         return strlen($string);
     }
 }
-

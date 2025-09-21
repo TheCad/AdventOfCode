@@ -3,105 +3,106 @@
 namespace Thecad\AdventOfCode\Year2015;
 
 use Thecad\AdventOfCode\Base\BaseClass;
-use Illuminate\Support\Arr;
 
 class Day09 extends BaseClass
 {
-  public function __construct()
-  {
-    $this->relativePath = __DIR__;
-    parent::__construct();
-  }
-
-  public function partOne(): int
-  {
-    $list = [];
-    foreach ($this->input as $line) {
-      $list[] = $this->parseInput($line);
+    public function __construct()
+    {
+        $this->relativePath = __DIR__;
+        parent::__construct();
     }
-    $distancesArr = $this->setupDistances($list);
-    $new = $this->createCombination(array_keys($distancesArr));
 
-    $minDist = PHP_INT_MAX;
-    foreach ($new as $route) {
-        $totalDistance = 0;
+    public function partOne(): int
+    {
+        $list = [];
+        foreach ($this->input as $line) {
+            $list[] = $this->parseInput($line);
+        }
+        $distancesArr = $this->setupDistances($list);
+        $new = $this->createCombination(array_keys($distancesArr));
 
-        for ($i = 0; $i < count($route) - 1; $i++) {
-            $fromCity = $route[$i];
-            $toCity = $route[$i + 1];
+        $minDist = PHP_INT_MAX;
+        foreach ($new as $route) {
+            $totalDistance = 0;
 
-            $distance = $distancesArr[$fromCity][$toCity];
-            $totalDistance += $distance;
+            for ($i = 0; $i < count($route) - 1; $i++) {
+                $fromCity = $route[$i];
+                $toCity = $route[$i + 1];
+
+                $distance = $distancesArr[$fromCity][$toCity];
+                $totalDistance += $distance;
+            }
+
+            if ($totalDistance < $minDist) {
+                $minDist = $totalDistance;
+            }
         }
 
-        if ($totalDistance < $minDist) {
-            $minDist = $totalDistance;
+        return $minDist;
+    }
+
+    public function partTwo(): int
+    {
+        $list = [];
+        foreach ($this->input as $line) {
+            $list[] = $this->parseInput($line);
         }
+        $distancesArr = $this->setupDistances($list);
+        $new = $this->createCombination(array_keys($distancesArr));
+
+        $maxDist = -PHP_INT_MAX;
+        foreach ($new as $route) {
+            $totalDistance = 0;
+
+            for ($i = 0; $i < count($route) - 1; $i++) {
+                $fromCity = $route[$i];
+                $toCity = $route[$i + 1];
+
+                $distance = $distancesArr[$fromCity][$toCity];
+                $totalDistance += $distance;
+            }
+
+            if ($totalDistance > $maxDist) {
+                $maxDist = $totalDistance;
+            }
+        }
+
+        return $maxDist;
     }
 
-    return $minDist;
-  }
+    private function calcShortest(array $list): int
+    {
+        $lowest = PHP_INT_MAX;
+        $sum = 0;
+        foreach ($list as $step) {
+            $sum = array_sum($step);
+            if ($sum < $lowest) {
+                $lowest = $sum;
+            }
+        }
 
-  public function partTwo(): int
-  {
-      $list = [];
-      foreach ($this->input as $line) {
-          $list[] = $this->parseInput($line);
-      }
-      $distancesArr = $this->setupDistances($list);
-      $new = $this->createCombination(array_keys($distancesArr));
-
-      $maxDist = -PHP_INT_MAX;
-      foreach ($new as $route) {
-          $totalDistance = 0;
-
-          for ($i = 0; $i < count($route) - 1; $i++) {
-              $fromCity = $route[$i];
-              $toCity = $route[$i + 1];
-
-              $distance = $distancesArr[$fromCity][$toCity];
-              $totalDistance += $distance;
-          }
-
-          if ($totalDistance > $maxDist) {
-              $maxDist = $totalDistance;
-          }
-      }
-
-      return $maxDist;
-  }
-
-  private function calcShortest(array $list): int
-  {
-    $lowest = PHP_INT_MAX;
-    $sum = 0;
-    foreach ($list as $step) {
-      $sum = array_sum($step);
-      if ($sum < $lowest)
-        $lowest = $sum;
+        return $sum;
     }
 
-    return $sum;
-  }
+    private function setupDistances(array $input): array
+    {
+        $arr = [];
+        foreach ($input as $step) {
+            $arr[$step[0]][$step[1]] = $step[2];
+            $arr[$step[1]][$step[0]] = $step[2];
+        }
 
-  private function setupDistances(array $input): array
-  {
-    $arr = [];
-    foreach ($input as $step) {
-      $arr[$step[0]][$step[1]] = $step[2];
-      $arr[$step[1]][$step[0]] = $step[2];
+        return $arr;
     }
 
-    return $arr;
-  }
+    private function parseInput(string $input): array
+    {
+        $ex = explode(' = ', $input);
+        $ex2 = explode(' to ', $ex[0]);
+        $ex2[] = $ex[1];
 
-  private function parseInput(string $input): array
-  {
-    $ex = explode(' = ', $input);
-    $ex2 = explode(' to ', $ex[0]);
-    $ex2[] = $ex[1];
-    return $ex2;
-  }
+        return $ex2;
+    }
 
     private function createCombination(array $distancesArr): array
     {
@@ -124,7 +125,7 @@ class Day09 extends BaseClass
                 $permutations[] = array_merge([$current], $perm);
             }
         }
+
         return $permutations;
     }
 }
-

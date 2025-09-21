@@ -4,42 +4,49 @@ namespace Thecad\AdventOfCode\Year2021;
 
 use Thecad\AdventOfCode\Base\BaseClass;
 
-class Day08 extends BaseClass {
-    public array $data = array();
-    public array $numbers = array();
-    public function __construct() {
+class Day08 extends BaseClass
+{
+    public array $data = [];
+
+    public array $numbers = [];
+
+    public function __construct()
+    {
         $this->relativePath = __DIR__;
         parent::__construct();
     }
 
-    public function partOne(): int {
+    public function partOne(): int
+    {
         // Create solution
         $total = 0;
         foreach ($this->input as $data) {
-            $split = explode("|", $data);
-            $output = explode(" ", trim($split[1]));
+            $split = explode('|', $data);
+            $output = explode(' ', trim($split[1]));
             foreach ($output as $item) {
                 switch (strlen($item)) {
-                case 2:
-                case 3:
-                case 4:
-                case 7:
-                    $total++;
-                    break;
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 7:
+                        $total++;
+                        break;
                 }
             }
         }
+
         return $total;
     }
 
-    public function partTwo(): int {
+    public function partTwo(): int
+    {
         // Create solution
         $total = 0;
 
         foreach ($this->input as $data) {
             [$input, $output] = array_map('trim', explode('|', $data));
             $this->decodeLetters($input);
-            foreach($this->numbers as &$item) {
+            foreach ($this->numbers as &$item) {
                 $str = str_split($item);
                 sort($str);
                 $item = implode($str);
@@ -51,22 +58,25 @@ class Day08 extends BaseClass {
         return $total;
     }
 
-    private function getAmount($letters) {
+    private function getAmount($letters)
+    {
         $list = explode(' ', $letters);
         $total = '';
-        foreach($list as $value) {
+        foreach ($list as $value) {
             $str = str_split($value);
             sort($str);
             $value = implode($str);
             $number = array_search($value, $this->numbers, false);
             $total .= $number;
         }
-        return (int)$total;
+
+        return (int) $total;
     }
 
-    private function decodeLetters($letters) {
-        $list = explode(" ", $letters);
-        usort($list, function($a, $b) {
+    private function decodeLetters($letters)
+    {
+        $list = explode(' ', $letters);
+        usort($list, function ($a, $b) {
             return strlen($a) - strlen($b);
         });
         $this->setEasyNumbers($list);
@@ -78,15 +88,20 @@ class Day08 extends BaseClass {
         $this->checkForZero($list);
     }
 
-    private function setEasyNumbers(&$array) {
+    private function setEasyNumbers(&$array)
+    {
         $this->numbers[1] = $array[0];
         $this->numbers[7] = $array[1];
         $this->numbers[4] = $array[2];
         $this->numbers[8] = $array[9];
-        unset($array[0]); unset($array[1]); unset($array[2]); unset($array[9]);
+        unset($array[0]);
+        unset($array[1]);
+        unset($array[2]);
+        unset($array[9]);
     }
 
-    private function checkForThree(&$array) {
+    private function checkForThree(&$array)
+    {
         foreach ($array as $key => $value) {
             if ((str_contains($value, $this->numbers[1][0]) && str_contains($value, $this->numbers[1][1])) && strlen($value) === 5) {
                 $this->numbers[3] = $value;
@@ -95,7 +110,8 @@ class Day08 extends BaseClass {
         }
     }
 
-    private function checkForNine(&$array) {
+    private function checkForNine(&$array)
+    {
         $three = $this->numbers[3];
         foreach ($array as $key => $value) {
             if (strlen($value) === 6) {
@@ -108,10 +124,11 @@ class Day08 extends BaseClass {
         }
     }
 
-    private function checkForFive(&$array) {
+    private function checkForFive(&$array)
+    {
         $nine = str_split($this->numbers[9]);
         $three = str_split($this->numbers[3]);
-        foreach($array as $key => $value) {
+        foreach ($array as $key => $value) {
             $temp = array_unique(array_merge($three, str_split($value)));
             sort($nine);
             sort($temp);
@@ -122,7 +139,8 @@ class Day08 extends BaseClass {
         }
     }
 
-    private function checkForSix(&$array) {
+    private function checkForSix(&$array)
+    {
         $nine = str_split($this->numbers[9]);
         $five = str_split($this->numbers[5]);
         $eight = str_split($this->numbers[8]);
@@ -141,12 +159,13 @@ class Day08 extends BaseClass {
         }
     }
 
-    private function checkForTwo(&$array) {
+    private function checkForTwo(&$array)
+    {
         $this->numbers[2] = array_shift($array);
     }
 
-    private function checkForZero($array) {
+    private function checkForZero($array)
+    {
         $this->numbers[0] = max($array);
     }
-
 }

@@ -5,19 +5,23 @@ namespace Thecad\AdventOfCode\Tests\Year2018;
 use PHPUnit\Framework\TestCase;
 use Thecad\AdventOfCode\Year2018\Day04;
 
-class Day04Test extends TestCase {
-
+class Day04Test extends TestCase
+{
     private Day04 $sut;
-    protected function setUp(): void {
+
+    protected function setUp(): void
+    {
         parent::setUp();
-        $this->sut = new Day04();
+        $this->sut = new Day04;
     }
 
-    public function testPart1(): void {
+    public function test_part1(): void
+    {
         self::assertTrue(true);
     }
 
-    public function testPart2(): void {
+    public function test_part2(): void
+    {
         self::assertTrue(true);
     }
 }

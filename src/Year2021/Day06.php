@@ -6,7 +6,8 @@ use Thecad\AdventOfCode\Base\BaseClass;
 
 class Day06 extends BaseClass
 {
-    private $data = array();
+    private $data = [];
+
     public function __construct()
     {
         $this->relativePath = __DIR__;
@@ -14,11 +15,12 @@ class Day06 extends BaseClass
         $this->loadData();
     }
 
-    public function loadData() {
-        $handle = fopen(__DIR__. '/inputs/Day06_input.txt', 'r');
+    public function loadData()
+    {
+        $handle = fopen(__DIR__.'/inputs/Day06_input.txt', 'r');
         if ($handle) {
             while (($line = fgets($handle)) !== false) {
-                $this->data = explode(',',$line);
+                $this->data = explode(',', $line);
             }
 
             fclose($handle);
@@ -37,17 +39,19 @@ class Day06 extends BaseClass
         return $this->doSteps(256);
     }
 
-    private function doSteps($count) {
+    private function doSteps($count)
+    {
         $temp = new \Ds\Deque(array_fill(0, 9, 0));
 
         foreach ($this->data as $value) {
-            $temp[(int)$value] += 1;
+            $temp[(int) $value] += 1;
         }
 
-        foreach (range(0, $count-1) as $item) {
+        foreach (range(0, $count - 1) as $item) {
             $temp->rotate(1);
             $temp[6] += $temp[8];
         }
+
         return $temp->sum();
     }
 }

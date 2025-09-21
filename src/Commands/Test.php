@@ -2,7 +2,6 @@
 
 namespace Thecad\AdventOfCode\Commands;
 
-use RuntimeException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -12,30 +11,35 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Dotenv\Dotenv;
 
 #[AsCommand(name: 'test', description: 'Runs the test for the given day and year')]
-class Test extends Command {
+class Test extends Command
+{
     protected SymfonyStyle $io;
-    protected function configure(): void {
-        (new Dotenv())->usePutenv()->bootEnv(dirname(__DIR__, 2) . DIRECTORY_SEPARATOR . '.env');
+
+    protected function configure(): void
+    {
+        (new Dotenv)->usePutenv()->bootEnv(dirname(__DIR__, 2).DIRECTORY_SEPARATOR.'.env');
         $setYear = getenv('YEAR');
         $this
-            ->addArgument('day', InputArgument::OPTIONAL, 'Which day do you want to test?', (int)date('d'))
+            ->addArgument('day', InputArgument::OPTIONAL, 'Which day do you want to test?', (int) date('d'))
             ->addArgument('year', InputArgument::OPTIONAL, 'Which year do you want to test?', $setYear ?: date('Y'));
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $this->io = new SymfonyStyle($input, $output);
 
-        $day = sprintf("%02d", $input->getArgument('day'));
+        $day = sprintf('%02d', $input->getArgument('day'));
         $year = date('Y', strtotime('1/1/'.$input->getArgument('year')));
 
-        $testPath = sprintf("%s/tests/Year%d", dirname(__DIR__, 2), $year);
-        $testFilePath = sprintf("%s/Day%02dTest.php", $testPath, $day);
+        $testPath = sprintf('%s/tests/Year%d', dirname(__DIR__, 2), $year);
+        $testFilePath = sprintf('%s/Day%02dTest.php', $testPath, $day);
 
-        if (!file_exists($testFilePath)) {
+        if (! file_exists($testFilePath)) {
             $this->io->error(sprintf('There is no test for day %d and year %d', $day, $year));
+
             return Command::FAILURE;
         }
-        $this->io->text(shell_exec(sprintf('./vendor/bin/phpunit --color %s',$testFilePath)));
+        $this->io->text(shell_exec(sprintf('./vendor/bin/phpunit --color %s', $testFilePath)));
 
         return Command::SUCCESS;
     }

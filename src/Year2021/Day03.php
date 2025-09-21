@@ -4,23 +4,27 @@ namespace Thecad\AdventOfCode\Year2021;
 
 use Thecad\AdventOfCode\Base\BaseClass;
 
-class Day03 extends BaseClass {
+class Day03 extends BaseClass
+{
     public int $oxIndex = 0;
+
     public int $coIndex = 0;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->relativePath = __DIR__;
         parent::__construct();
     }
 
-    public function partOne(): int {
+    public function partOne(): int
+    {
         $strlen = strlen($this->input[0]);
-        $amount = array_fill(0, $strlen, array_fill(0,2,null));
-        $gamma = "";
-        $epsilon ="";
+        $amount = array_fill(0, $strlen, array_fill(0, 2, null));
+        $gamma = '';
+        $epsilon = '';
 
         foreach ($this->input as $line) {
-            for($i = 0; $i < $strlen; $i++) {
+            for ($i = 0; $i < $strlen; $i++) {
                 switch ($line[$i]) {
                     case 0:
                         $amount[$i][0]++;
@@ -32,56 +36,63 @@ class Day03 extends BaseClass {
             }
         }
 
-
         foreach ($amount as $line) {
             if ($line[0] > $line[1]) {
-                $gamma .= "0";
-                $epsilon .= "1";
-            }
-            else {
-                $gamma .= "1";
-                $epsilon .= "0";
+                $gamma .= '0';
+                $epsilon .= '1';
+            } else {
+                $gamma .= '1';
+                $epsilon .= '0';
             }
         }
 
-        return (bindec($gamma) * bindec($epsilon));
+        return bindec($gamma) * bindec($epsilon);
     }
 
-    public function partTwo(): int {
+    public function partTwo(): int
+    {
         $ox = $this->getOxygen($this->input);
         $co = $this->getCo2($this->input);
 
-        return (bindec($ox) * bindec($co));
+        return bindec($ox) * bindec($co);
     }
 
-    function getOxygen($list) {
-        if (count($list) == 1 )
+    public function getOxygen($list)
+    {
+        if (count($list) == 1) {
             return $list[0];
+        }
+
         return $this->getOxygen($this->getHighest($list));
     }
 
     private function getCo2($list)
     {
-        if (count($list) == 1)
+        if (count($list) == 1) {
             return $list[0];
+        }
+
         return $this->getCo2($this->getLowest($list));
     }
 
-    function getHighest($list) {
+    public function getHighest($list)
+    {
         $result = $this->countZeroesAndOnes($list, $this->oxIndex);
         $this->oxIndex++;
 
-        return (count($result['zeroes']) > count($result['ones']) ? $result['zeroes'] : $result['ones']);
+        return count($result['zeroes']) > count($result['ones']) ? $result['zeroes'] : $result['ones'];
     }
 
-    function getLowest($list) {
+    public function getLowest($list)
+    {
         $result = $this->countZeroesAndOnes($list, $this->coIndex);
         $this->coIndex++;
 
-        return (count($result['zeroes']) > count($result['ones']) ? $result['ones'] : $result['zeroes']);
+        return count($result['zeroes']) > count($result['ones']) ? $result['ones'] : $result['zeroes'];
     }
 
-    function countZeroesAndOnes($list, $index): array {
+    public function countZeroesAndOnes($list, $index): array
+    {
         $zeroes = [];
         $ones = [];
         $count = array_fill(0, 2, null);
