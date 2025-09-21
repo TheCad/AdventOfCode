@@ -17,14 +17,18 @@ class Day%02dTest extends TestCase
 
   public function testPart1(): void
   {
-    $this->sut->partOne();
-    self::assertTrue(true);
+    $this->sut->setTestInput([]);
+    $actual = $this->sut->partOne();
+    $exp = 0;
+    self::assertEquals($exp, $actual);
   }
 
   public function testPart2(): void
   {
-    $this->sut->partTwo();
-    self::assertTrue(true);
+    $this->sut->setTestInput([]);
+    $actual = $this->sut->partTwo();
+    $exp = 0;
+    self::assertEquals($exp, $actual);
   }
 }
 
